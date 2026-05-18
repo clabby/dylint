@@ -2,6 +2,10 @@
 
 This file records user-facing changes to packages `cargo_dylint`, `dylint`, `dylint_driver`, `dylint-link`, `dylint_linting`, and `dylint_testing`. If a change to one of those packages is missing, please [open an issue](https://github.com/trailofbits/dylint/issues).
 
+## 6.0.3
+
+- Test release
+
 ## 6.0.0
 
 - Update README.md to include examples of git revisions ([#1802](https://github.com/trailofbits/dylint/pull/1802))&mdash;thanks [@brannondorsey](https://github.com/brannondorsey)
