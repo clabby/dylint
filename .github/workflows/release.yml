@@ -81,9 +81,6 @@ jobs:
       - name: Check CHANGELOG.md
         run: ./scripts/check_CHANGELOG.sh "${{ github.ref }}"
 
-      - uses: rust-lang/crates-io-auth-action@v1
-        id: auth
-
       - name: Download binary artifacts
         uses: actions/download-artifact@v4
         with:
