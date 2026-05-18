@@ -136,4 +136,3 @@ jobs:
             dist/*.sig
           draft: false
           prerelease: ${{ contains(github.ref, 'pre') || contains(github.ref, 'rc') }}
-          token: ${{ secrets.REPO_TOKEN }}
