@@ -100,14 +100,15 @@ jobs:
         run: |
           set -euo pipefail
 
-          MINISIGN_KEY=minisign.key
+          MINISIGN_PRIV_KEY=minisign.key
+          MINISIGN_PUB_KEY=minisign.pub
           MANIFESTS="cargo-dylint/Cargo.toml dylint-link/Cargo.toml"
-          trap 'rm -f "${MINISIGN_KEY}" minisign.pub' EXIT
+          trap 'rm -f "${MINISIGN_PRIV_KEY}" "${MINISIGN_PUB_KEY}"' EXIT
 
-          rsign generate -f -W -p minisign.pub -s "${MINISIGN_KEY}"
-          echo "::add-mask::$(tail -n 1 "${MINISIGN_KEY}")"
+          rsign generate -f -W -p "${MINISIGN_PUB_KEY}" -s "${MINISIGN_PRIV_KEY}"
+          echo "::add-mask::$(tail -n 1 "${MINISIGN_PRIV_KEY}")"
 
-          PUBLIC_KEY="$(tail -n 1 minisign.pub)"
+          PUBLIC_KEY="$(tail -n 1 ${MINISIGN_PUB_KEY})"
 
           for MANIFEST in $MANIFESTS; do
             printf '\n[package.metadata.binstall.signing]\n' >> "${MANIFEST}"
@@ -116,7 +117,7 @@ jobs:
           done
 
           for ARCHIVE in dist/*.tar.gz; do
-            rsign sign -W -s "${MINISIGN_KEY}" -x "${ARCHIVE}.sig" "${ARCHIVE}"
+            rsign sign -W -s "${MINISIGN_PRIV_KEY}" -x "${ARCHIVE}.sig" "${ARCHIVE}"
           done
 
       - name: Publish
