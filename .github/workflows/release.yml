@@ -120,18 +120,6 @@ jobs:
             rsign sign -W -s "${MINISIGN_PRIV_KEY}" -x "${ARCHIVE}.sig" "${ARCHIVE}"
           done
 
-      - name: Publish
-        run: |
-          set -euo pipefail
-
-          # smoelius: Publishing in this order ensures that all dependencies are met.
-          DIRS="internal driver dylint-link dylint cargo-dylint utils/linting utils/testing"
-          for DIR in $DIRS; do
-              (cd "$DIR" && cargo publish --allow-dirty)
-          done
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
-
       - name: Get version
         id: get-version
         run: echo "version=${GITHUB_REF/refs\/tags\/v/}" >> "$GITHUB_OUTPUT"
